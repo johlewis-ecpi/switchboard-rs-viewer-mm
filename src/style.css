@@ -1,0 +1,39 @@
+:root{color-scheme:light dark;font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:Canvas;color:CanvasText}
+*{box-sizing:border-box}
+body{margin:0;padding:24px}
+article{max-width:1000px;margin:0 auto}
+h1{font-size:28px;line-height:1.2;margin:8px 0 14px;overflow-wrap:anywhere}
+.filename,.count{font-size:12px;opacity:.7}
+.filename{overflow-wrap:anywhere}
+.toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:24px}
+label{display:flex;align-items:center;gap:8px}
+input,button{font:inherit;color:inherit;background:Field;border:1px solid GrayText;border-radius:6px;padding:7px 10px}
+button{cursor:pointer}
+input[type=search]{width:min(280px,55vw)}
+input:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid Highlight;outline-offset:3px}
+.tree,.tree ul{list-style:none;margin:0;padding:0}
+.tree ul{margin-left:12px;padding-left:16px;border-left:1px solid color-mix(in srgb,CanvasText 20%,transparent)}
+.item{margin:2px 0}
+.item.colored>details>summary .text,.item.colored>.leaf .text{border-left:4px solid var(--node-color);padding-left:6px}
+summary,.leaf{padding:3px 4px;border-radius:6px;overflow-wrap:anywhere}
+summary{cursor:pointer}
+summary:hover{background:color-mix(in srgb,CanvasText 6%,transparent)}
+.label{display:inline}
+.label.filled .text{background:color-mix(in srgb,var(--node-background) 35%,transparent);border-radius:4px;padding:0 4px}
+.text{white-space:pre-wrap;user-select:text}
+.text.blank{opacity:.5;font-style:italic}
+.badge{margin-left:8px;font-size:11px;padding:1px 6px;border-radius:10px;border:1px solid color-mix(in srgb,CanvasText 30%,transparent);opacity:.8}
+.link{margin-left:8px;font-size:12px;opacity:.75;user-select:text}
+.extras{margin:2px 0 6px 22px}
+.extras:empty{display:none}
+.note,.details{margin:4px 0;padding:6px 10px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;border-radius:6px;background:color-mix(in srgb,CanvasText 6%,Canvas)}
+.note{border-left:3px solid #d9a400}
+.details{opacity:.85;font-style:italic}
+.attributes{display:grid;grid-template-columns:max-content 1fr;gap:0 12px;margin:4px 0;font-size:12px}
+.attributes dt{font-weight:600}
+.attributes dd{margin:0;overflow-wrap:anywhere}
+#error{border-left:4px solid #be4c36;padding:14px;background:color-mix(in srgb,#be4c36 10%,Canvas);overflow-wrap:anywhere}
+.empty{opacity:.7}
+[hidden]{display:none!important}
+@media(max-width:500px){body{padding:16px}h1{font-size:23px}.tree ul{margin-left:4px;padding-left:10px}}
+@media(prefers-reduced-motion:no-preference){summary{transition:background .1s}}

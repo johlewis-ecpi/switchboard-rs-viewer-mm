@@ -1,0 +1,21 @@
+const {test}=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const path=require('node:path');
+const {dom,find,environment,open,settle,executeBundle}=require('./helpers.cjs');
+const sample=name=>fs.readFileSync(path.join(__dirname,'../samples',name+'.mm'),'utf8');
+const all=(node,predicate,out=[])=>{if(predicate(node))out.push(node);for(const c of node.children)all(c,predicate,out);return out;};
+test('built bundle renders, filters, expands/collapses, and reports parse failures',async()=>{
+  const {build}=await import('../scripts/build.mjs');const html=fs.readFileSync(path.join(await build(),'index.html'),'utf8');
+  const document=dom(),env=environment();executeBundle(html,env,document);assert.equal(env.messages[0].type,'switchboard:ready');
+  env.dispatch(open(1,sample('edge-cases')));await settle();assert.equal(env.messages.at(-1).type,'switchboard:rendered');
+  const text=document.nodes.content.textContent;assert(text.includes('<img src=x'));assert(text.includes('</script>'));assert.equal(document.nodes.error.hidden,true);
+  env.dispatch(open(2,sample('welcome')));await settle();const article=document.nodes.content;
+  const details=()=>all(article,n=>n.tagName==='DETAILS');
+  assert(article.textContent.includes('8 nodes'));assert.equal(details().find(d=>d.textContent.startsWith('Build')).open,false);
+  const search=find(article,n=>n.type==='search');search.value='parser';search.dispatch('input');
+  assert(article.textContent.includes('1 of 8 nodes match'));assert.equal(details().find(d=>d.textContent.startsWith('Build')).open,true);
+  assert.equal(all(article,n=>n.tagName==='LI'&&n.hidden).length,5);
+  search.value='nothing here';search.dispatch('input');assert(article.textContent.includes('No nodes match'));
+  search.value='';search.dispatch('input');const [expand,collapse]=all(article,n=>n.tagName==='BUTTON');
+  collapse.dispatch('click');assert.deepEqual(details().map(d=>d.open),[true,false,false]);expand.dispatch('click');assert(details().every(d=>d.open));
+  env.dispatch(open(3,sample('invalid')));await settle();assert.equal(env.messages.at(-1).type,'switchboard:error');assert.equal(document.nodes.error.hidden,false);assert.equal(document.nodes.content.children.length,0);
+  env.dispatch(open(4,sample('empty')));await settle();assert(document.nodes.content.textContent.includes('1 nodes'));
+});

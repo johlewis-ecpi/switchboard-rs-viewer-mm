@@ -1,0 +1,16 @@
+{
+  "name": "switchboard-viewer-mm",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Offline Switchboard API v1 reader for FreeMind and Freeplane (.mm) mind maps",
+  "license": "MIT",
+  "type": "commonjs",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test --test-concurrency=1 test/*.test.cjs",
+    "check": "npm run build && npm test && node scripts/validate.mjs",
+    "preview": "npm run build && node scripts/serve.mjs",
+    "validate": "node scripts/validate.mjs"
+  }
+}

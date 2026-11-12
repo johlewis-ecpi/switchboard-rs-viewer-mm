@@ -1,0 +1,6 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Switchboard viewer development harness</title><link rel="stylesheet" href="/style.css"></head><body>
+<header><h1>Viewer development harness</h1><p>This local preview uses the same reader sandbox and API v1 messages as Switchboard.</p>
+<div class="controls"><label>Sample <select id="sample"><option value="welcome">Freeplane map</option><option value="freemind">Legacy FreeMind map</option><option value="edge-cases">Unicode &amp; literal markup</option><option value="empty">Root only</option><option value="invalid">Invalid document</option></select></label><button id="open">Open sample</button><label class="file">Open local file <input id="file" type="file"></label></div>
+<p id="status" role="status" aria-live="polite">Starting…</p><div class="controls"><button id="confirm" disabled>Confirm Rendering</button><button id="fail" disabled>Report Problem</button><span id="verdict">Rendering not visually verified.</span></div></header>
+<main><iframe id="reader" title="Reader preview" sandbox="allow-scripts" referrerpolicy="no-referrer"></iframe></main>
+<details><summary>Protocol log</summary><pre id="log"></pre></details><script src="/harness.js"></script></body></html>
